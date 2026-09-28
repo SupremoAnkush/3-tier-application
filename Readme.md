@@ -21,7 +21,8 @@ Specify networks in network block -> A bridge network in Docker Compose is the d
 Specify volumes in volume block -> The Host filesystem connects to containers in two distinct ways—either through a Docker-managed volume box and directly to specific Host filesystem folders like /etc , /usr, /docker-entrypoint-initdb.d via Bind Mounts. 
   This means there are 2 types of volume mounts for containers : Volume Mounts , Bind Mounts
   * Named Volume Mounts : This will store the data from emphemeral container's volume to a persistence volume in thte host system.
-  * Bind Mounts : This is a specific file system in host machine where 
+  * Bind Mounts : This use to mount a file or directory from your host computer onto the container and access it using its absolute path. This useful when we want to share some bootup files, configuration files etc which are required for the application 
+Evironment block -> These are the environment variables which Passes at runtime configuration into your application code.
 
 
 # 5.Launch and Verify tier Isolation
