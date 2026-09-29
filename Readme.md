@@ -39,7 +39,19 @@ curl -X POST http://localhost:8080/api/tasks \
   -H "Content-Type: application/json" \
   -d '{"title": "Test network isolation between tiers"}'
 
-# 4. Verify Nginx CANNOT reach PostgreSQL directly (should fail to resolve host 'db')
+# 4. Delete a task
+curl -X POST http://localhost:8080/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Test network isolation between tiers"}'
+
+# 5. Verify Nginx CANNOT reach PostgreSQL directly (should fail to resolve host 'db')
 docker exec tier3_nginx ping -c 1 db```
+
+# 6. Save, list, restore the SANPSHOT as backup in backup/ dir in local
+/Users/ankush/Developer/k8s-local-sre/3-tier-app/docker-compose/db/scripts/db-checkpoint.sh save
+/Users/ankush/Developer/k8s-local-sre/3-tier-app/docker-compose/db/scripts/db-checkpoint.sh list
+/Users/ankush/Developer/k8s-local-sre/3-tier-app/docker-compose/db/scripts/db-checkpoint.sh restore
+/Users/ankush/Developer/k8s-local-sre/3-tier-app/docker-compose/db/scripts/db-checkpoint.sh restore backup_file_version
+
 
 

@@ -8,7 +8,9 @@ services:
       POSTGRES_PASSWORD: secretpassword
       POSTGRES_DB: trackerdb
     volumes:
+      # 1. Persistent named volume for day-to-day work
       - pgdata:/var/lib/postgresql/data
+      # 2. Runs 01-schema.sql then 02-seed.sql automatically on fresh installs
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - backend-net

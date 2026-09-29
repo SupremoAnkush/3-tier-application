@@ -34,18 +34,34 @@ app.get('/api/tasks', async (req, res) => {
 
 // Create a new task
 app.post('/api/tasks', async (req, res) => {
-  const { title } = req.body;
+  const { title, status } = req.body;
   if (!title) return res.status(400).json({ error: 'Title is required' });
   try {
     const { rows } = await pool.query(
-      'INSERT INTO tasks (title) VALUES ($1) RETURNING *',
-      [title]
+      'INSERT INTO tasks (title,status) VALUES ($1, $2) RETURNING *',
+      [title, status]
     );
     res.status(201).json(rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+// Delete a task
+app.delete('/api/tasks/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { rows, rowCount } = await pool.query(
+      'DELETE FROM tasks WHERE id = $1 RETURNING *',
+      [id]
+    );
+    if (rowCount === 0) return res.status(404).json({ error: 'Task not found' });
+    res.status(200).json({ message: 'Task deleted', deletedTask: rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {

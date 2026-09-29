@@ -1,0 +1,6 @@
+# Local environment variables
+.env
+
+# Personal database checkpoints & dumps
+backups/
+*.dump
